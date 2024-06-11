@@ -22,32 +22,43 @@ export const theme = createTheme({
 
   /* Colors */
   primaryShade: 5,
-  primaryColor: 'teal',
+  primaryColor: 'bright-orange',
   colors: {
-    'bright-pink': [
-      '#F0BBDD',
-      '#ED9BCF',
-      '#EC7CC3',
-      '#ED5DB8',
-      '#F13EAF',
-      '#F71FA7',
-      '#FF00A1',
-      '#E00890',
-      '#C50E82',
-      '#AD1374',
+    'bright-orange': [
+      '#fff8e1',
+      '#ffefcc',
+      '#ffdd9b',
+      '#ffca64',
+      '#ffba38',
+      '#ffb01b',
+      '#ffab09',
+      '#e39500',
+      '#ca8500',
+      '#af7100',
     ],
-
+    'bright-green': [
+      '#effee7',
+      '#e0f8d4',
+      '#c2efab',
+      '#a2e67e',
+      '#87de57',
+      '#75d940',
+      '#6bd731',
+      '#59be23',
+      '#4da91b',
+      '#3d920c',
+    ],
     primary: virtualColor({
       name: 'primary',
-      dark: 'red',
-      light: 'blue',
+      dark: 'bright-orange',
+      light: 'bright-green',
     }),
   },
 
   defaultGradient: {
-    from: 'orange',
-    to: 'red',
-    deg: 45,
+    from: 'bright-green',
+    to: 'bright-orange',
+    deg: 30,
   },
 
   /* Other */

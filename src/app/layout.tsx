@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { emotionTransform, MantineEmotionProvider } from '@mantine/emotion';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 
@@ -6,6 +7,7 @@ import './globals.css';
 import '@mantine/core/styles.css';
 
 import { theme } from '@/theme';
+import { RootStyleRegistry } from '@/utils/wrapper/EmotionRootStyleRegistry';
 
 const roboto = Roboto({
   weight: ['400', '500', '700', '300'],
@@ -27,7 +29,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={roboto.className}>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <RootStyleRegistry>
+          <MantineEmotionProvider>
+            <MantineProvider stylesTransform={emotionTransform} theme={theme}>
+              {children}
+            </MantineProvider>
+          </MantineEmotionProvider>
+        </RootStyleRegistry>
       </body>
     </html>
   );
