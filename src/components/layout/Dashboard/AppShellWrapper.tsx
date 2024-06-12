@@ -1,10 +1,19 @@
 'use client';
 
-import { ActionIcon, Affix, AppShell, Drawer, Group } from '@mantine/core';
+import {
+  ActionIcon,
+  Affix,
+  AppShell,
+  Container,
+  Drawer,
+  Group,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBurger } from '@tabler/icons-react';
+import { IconBurger, IconMoon } from '@tabler/icons-react';
 
-import Navbar from './ui/Navbar';
+import { Breadcrumb } from '@/components/layout/Dashboard/ui/Breadcrumb';
+import { Navbar } from '@/components/layout/Dashboard/ui/Navbar';
 
 export default function AppShellWrapper({
   children,
@@ -12,24 +21,45 @@ export default function AppShellWrapper({
   children: React.ReactNode;
 }>) {
   const [opened, { toggle }] = useDisclosure(false);
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
   return (
     <AppShell header={{ height: 60 }} padding='md'>
       <AppShell.Header>
         <Group h='100%' px='md'>
           <IconBurger size={30} />
         </Group>
+        <Breadcrumb />
       </AppShell.Header>
-      <AppShell.Main>{children}</AppShell.Main>
-      <Affix position={{ bottom: 20, left: 20 }}>
-        <ActionIcon size='xl' aria-label='MenuIcon' onClick={toggle}>
-          <IconBurger />
-        </ActionIcon>
+      <AppShell.Main>
+        <Container fluid mt='xl' bg='var(--mantine-color-blue-light)'>
+          {children}
+        </Container>
+      </AppShell.Main>
+      <Affix position={{ top: 70, right: 20 }}>
+        <Group>
+          <ActionIcon
+            size='xl'
+            variant='light'
+            aria-label='MoonIcon'
+            onClick={() =>
+              setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
+            }
+          >
+            <IconMoon />
+          </ActionIcon>
+          <ActionIcon size='xl' aria-label='MenuIcon' onClick={toggle}>
+            <IconBurger />
+          </ActionIcon>
+        </Group>
       </Affix>
       <Drawer
+        position='left'
         opened={opened}
         onClose={toggle}
-        size='sm'
-        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
+        size='xs'
+        offset={15}
+        overlayProps={{ backgroundOpacity: 0.1, blur: 0 }}
+        withCloseButton={false}
       >
         <Navbar />
       </Drawer>

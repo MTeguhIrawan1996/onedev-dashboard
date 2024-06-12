@@ -22,44 +22,58 @@ export const theme = createTheme({
 
   /* Colors */
   primaryShade: 5,
-  primaryColor: 'bright-orange',
+  primaryColor: 'brown',
   colors: {
-    'bright-orange': [
-      '#fff8e1',
-      '#ffefcc',
-      '#ffdd9b',
-      '#ffca64',
-      '#ffba38',
-      '#ffb01b',
-      '#ffab09',
-      '#e39500',
-      '#ca8500',
-      '#af7100',
+    'light-blue': [
+      '#e0fbff',
+      '#cbf2ff',
+      '#9ae2ff',
+      '#64d2ff',
+      '#3cc5fe',
+      '#23bcfe',
+      '#09b8ff',
+      '#00a1e4',
+      '#0090cd',
+      '#007cb5',
     ],
-    'bright-green': [
-      '#effee7',
-      '#e0f8d4',
-      '#c2efab',
-      '#a2e67e',
-      '#87de57',
-      '#75d940',
-      '#6bd731',
-      '#59be23',
-      '#4da91b',
-      '#3d920c',
+    brown: [
+      '#f7f3f2',
+      '#e7e5e5',
+      '#d2c9c6',
+      '#bdaaa4',
+      '#ab9087',
+      '#a17f75',
+      '#9d766b',
+      '#896459',
+      '#7b584e',
+      '#6d4b40',
     ],
     primary: virtualColor({
       name: 'primary',
-      dark: 'bright-orange',
-      light: 'bright-green',
+      dark: 'light-blue',
+      light: 'brown',
     }),
   },
 
+  other: {
+    heroHeight: rem(400),
+    primaryLight: '#87de57',
+    primaryDark: '#3cc5fe',
+  },
+
   defaultGradient: {
-    from: 'bright-green',
-    to: 'bright-orange',
+    from: 'light-blue',
+    to: 'brown',
     deg: 30,
   },
+
+  /* Component */
+
+  // components: {
+  //   TextInput: TextInput.extend({
+  //     styles: (th, props) => ({}),
+  //   }),
+  // },
 
   /* Other */
   defaultRadius: 'md',

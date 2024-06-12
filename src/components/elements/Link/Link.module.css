@@ -1,0 +1,17 @@
+.navlink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-sm);
+  gap: var(--mantine-spacing-sm);
+  @mixin hover {
+    background-color: var(--mantine-color-green-light-hover);
+  }
+
+  @mixin dark {
+    @mixin hover {
+      background-color: var(--mantine-color-blue-light-hover);
+    }
+  }
+}
