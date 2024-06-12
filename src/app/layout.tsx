@@ -4,7 +4,7 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import '@mantine/core/styles.css';
 
-import { MantineWrapper } from '@/utils/wrapper/MantineProvider';
+import { MantineWrapper } from '@/components/ui/wrapper/MantineProvider';
 
 const roboto = Roboto({
   weight: ['400', '500', '700', '300'],

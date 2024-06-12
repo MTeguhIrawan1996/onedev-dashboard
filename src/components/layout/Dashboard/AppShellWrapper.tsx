@@ -2,16 +2,18 @@
 
 import {
   ActionIcon,
-  Affix,
   AppShell,
+  Box,
   Container,
   Drawer,
   Group,
+  Stack,
   useMantineColorScheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconBurger, IconMoon } from '@tabler/icons-react';
 
+import { SearchButtonMenu } from '@/components/elements/Button';
 import { Breadcrumb } from '@/components/layout/Dashboard/ui/Breadcrumb';
 import { Navbar } from '@/components/layout/Dashboard/ui/Navbar';
 
@@ -23,35 +25,50 @@ export default function AppShellWrapper({
   const [opened, { toggle }] = useDisclosure(false);
   const { colorScheme, setColorScheme } = useMantineColorScheme();
   return (
-    <AppShell header={{ height: 60 }} padding='md'>
-      <AppShell.Header>
-        <Group h='100%' px='md'>
-          <IconBurger size={30} />
-        </Group>
-        <Breadcrumb />
+    <AppShell header={{ height: 'fit-content' }} padding='md'>
+      <AppShell.Header withBorder={false}>
+        <Stack gap={0}>
+          <Group
+            p='sm'
+            style={{ borderBottom: '1px solid var(--app-shell-border-color)' }}
+            justify='space-between'
+          >
+            <IconBurger size={30} />
+            <Group>
+              <Group>
+                <ActionIcon
+                  size='md'
+                  variant='light'
+                  aria-label='MoonIcon'
+                  onClick={() =>
+                    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
+                  }
+                >
+                  <IconMoon
+                    style={{ width: '70%', height: '70%' }}
+                    stroke={1.2}
+                  />
+                </ActionIcon>
+                <ActionIcon size='md' aria-label='MenuIcon' onClick={toggle}>
+                  <IconBurger
+                    style={{ width: '70%', height: '70%' }}
+                    stroke={1.2}
+                  />
+                </ActionIcon>
+              </Group>
+              <SearchButtonMenu w={300} fullWidth={false} mb={0} />
+            </Group>
+          </Group>
+          <Box px='md'>
+            <Breadcrumb />
+          </Box>
+        </Stack>
       </AppShell.Header>
       <AppShell.Main>
-        <Container fluid mt='xl' bg='var(--mantine-color-blue-light)'>
+        <Container size='xl' mt={100}>
           {children}
         </Container>
       </AppShell.Main>
-      <Affix position={{ top: 70, right: 20 }}>
-        <Group>
-          <ActionIcon
-            size='xl'
-            variant='light'
-            aria-label='MoonIcon'
-            onClick={() =>
-              setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
-            }
-          >
-            <IconMoon />
-          </ActionIcon>
-          <ActionIcon size='xl' aria-label='MenuIcon' onClick={toggle}>
-            <IconBurger />
-          </ActionIcon>
-        </Group>
-      </Affix>
       <Drawer
         position='left'
         opened={opened}

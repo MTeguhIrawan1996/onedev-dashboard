@@ -1,35 +1,15 @@
-import {
-  Badge,
-  Box,
-  Code,
-  rem,
-  Text,
-  TextInput,
-  UnstyledButton,
-} from '@mantine/core';
-import {
-  IconBulb,
-  IconCheckbox,
-  IconSearch,
-  IconUser,
-} from '@tabler/icons-react';
+import { Badge, Box, rem, Text } from '@mantine/core';
 
 import classes from '@/styles/Navbar.module.css';
 
-import { UserButton } from '@/components/elements/Button';
+import { SearchButtonMenu, UserButton } from '@/components/elements/Button';
 import { PrimaryLink } from '@/components/elements/Link';
 
-import { dashboardNavigation } from '@/utils/constans/dashboardNavigation';
-
-const links = [
-  { icon: IconBulb, label: 'Activity', notifications: 3 },
-  { icon: IconCheckbox, label: 'Tasks', notifications: 4 },
-  { icon: IconUser, label: 'Contacts' },
-];
+import { collections, links } from '@/utils/constans/dashboardNavigation';
 
 export function Navbar() {
   const mainLinks = links.map((link) => (
-    <UnstyledButton key={link.label} className={classes.mainLink}>
+    <PrimaryLink href={link.href} key={link.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
         <link.icon size={20} className={classes.mainLinkIcon} stroke={1.5} />
         <span>{link.label}</span>
@@ -39,10 +19,10 @@ export function Navbar() {
           {link.notifications}
         </Badge>
       )}
-    </UnstyledButton>
+    </PrimaryLink>
   ));
 
-  const collectionLinks = dashboardNavigation.map((collection) => (
+  const collectionLinks = collections.map((collection) => (
     <PrimaryLink
       href={collection.href}
       key={collection.label}
@@ -60,30 +40,14 @@ export function Navbar() {
       <div className={classes.section}>
         <UserButton />
       </div>
-
-      <TextInput
-        placeholder='Search'
-        size='xs'
-        leftSection={
-          <IconSearch
-            style={{ width: rem(12), height: rem(12) }}
-            stroke={1.5}
-          />
-        }
-        rightSectionWidth={70}
-        rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
-        styles={{ section: { pointerEvents: 'none' } }}
-        mb='sm'
-      />
-
+      <SearchButtonMenu />
       <div className={classes.section}>
         <div className={classes.mainLinks}>{mainLinks}</div>
       </div>
-
       <div className={classes.section}>
         <Box className={classes.collectionsHeader}>
           <Text size='xs' fw={500} c='dimmed'>
-            Menu
+            Collention
           </Text>
         </Box>
         <div className={classes.collections}>{collectionLinks}</div>
