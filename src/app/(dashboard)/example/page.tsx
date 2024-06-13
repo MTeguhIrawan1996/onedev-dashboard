@@ -1,5 +1,5 @@
-function page() {
-  return <div>Example</div>;
-}
+import { ExamplePage } from '@/components/features';
 
-export default page;
+export default function Example() {
+  return <ExamplePage />;
+}
