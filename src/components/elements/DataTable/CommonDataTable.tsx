@@ -14,6 +14,8 @@ export function CommonDataTable<T>({ tableProps }: ICommonDataTableProps<T>) {
       withColumnBorders
       withRowBorders
       withTableBorder
+      highlightOnHover
+      striped
       defaultColumnProps={{
         textAlign: 'left',
         noWrap: true,

@@ -1,20 +1,29 @@
 'use client';
 
 import { Box, Text } from '@mantine/core';
+import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 
 import { CommonDataTable } from '@/components/elements/DataTable';
 
-export function ClientDataTable() {
-  const [page, setPage] = React.useState<number>(1);
+import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
+import { examplesParsers } from '@/utils/lib/searchParams';
+
+type IProps = {
+  data: IExampleResponse[];
+};
+
+export function ClientDataTable({ data }: IProps) {
+  const [queryParams, setQueryParams] = useQueryStates(examplesParsers, {
+    shallow: false,
+  });
+
+  const { l, p } = queryParams;
 
   return (
     <CommonDataTable
       tableProps={{
-        records: [
-          { id: 1, name: 'Joe Biden', bornIn: 1942, party: 'Democratic' },
-          { id: 2, name: 'Joe', bornIn: 1888, party: 'asdasd' },
-        ],
+        records: data,
         columns: [
           {
             accessor: 'id',
@@ -22,21 +31,21 @@ export function ClientDataTable() {
             sortable: true,
             width: '0%',
           },
-          { accessor: 'name' },
+          { accessor: 'title' },
           {
-            accessor: 'party',
-            render: ({ party }) => (
-              <Box fw={700} c={party === 'Democratic' ? 'blue' : 'red'}>
-                {party.slice(0, 3).toUpperCase()}
+            accessor: 'author',
+            render: ({ author }) => (
+              <Box fw={700} c='blue'>
+                {author}
               </Box>
             ),
           },
-          { accessor: 'bornIn' },
+          { accessor: 'createdAt' },
         ],
-        totalRecords: 50,
-        recordsPerPage: 2,
-        page,
-        onPageChange: (e) => setPage(e),
+        totalRecords: 20,
+        recordsPerPage: l,
+        page: p,
+        onPageChange: (e) => setQueryParams({ p: e }),
         paginationSize: 'xs',
         loadingText: 'Loading...',
         noRecordsText: 'No records found',

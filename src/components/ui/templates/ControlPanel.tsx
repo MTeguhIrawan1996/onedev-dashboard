@@ -1,16 +1,14 @@
 'use client';
 
-import { ActionIcon, em, Group, TextInput } from '@mantine/core';
+import { ActionIcon, em, Group } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import * as React from 'react';
 
 import { FilterButton, PeriodButton } from '@/components/elements/Button';
+import { SearchBar } from '@/components/elements/Panel';
 
-interface IControlPanelProps {}
-
-// eslint-disable-next-line unused-imports/no-unused-vars
-export function ControlPanel(props: IControlPanelProps) {
+export function ControlPanel() {
   const isBase = useMediaQuery(`(max-width: ${em(768)})`);
   return (
     <Group justify='space-between' wrap={isBase ? 'wrap' : 'nowrap'}>
@@ -19,12 +17,7 @@ export function ControlPanel(props: IControlPanelProps) {
         <PeriodButton />
       </Group>
       <Group w={{ base: '100%', sm: 'fit-content' }} wrap='nowrap'>
-        <TextInput
-          leftSectionPointerEvents='none'
-          leftSection={<IconSearch style={{ width: '50%', height: '50%' }} />}
-          placeholder='Search'
-          w={{ base: '100%', sm: 300 }}
-        />
+        <SearchBar />
         <ActionIcon variant='default' size='lg' aria-label='Settings'>
           <IconPlus style={{ width: '60%', height: '60%' }} stroke={1.2} />
         </ActionIcon>

@@ -14,11 +14,10 @@ export function UserButton() {
 
         <div style={{ flex: 1 }}>
           <Text size='sm' fw={500}>
-            Harriette Spoonlicker
+            M Teguh Irawan
           </Text>
-
           <Text c='dimmed' size='xs'>
-            hspoonlicker@outlook.com
+            onedev@outlook.com
           </Text>
         </div>
 
