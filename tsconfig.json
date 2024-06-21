@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
-    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "types": [
+      "node",
+      "jest",
+      "@testing-library/jest-dom",
+      "@serwist/next/typings"
+    ],
     "target": "es5",
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "webworker"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -34,7 +39,7 @@
     ".next/types/**/*.ts",
     "src/env.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "public/sw.js"],
   "moduleResolution": ["node_modules", ".next", "node"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "on"
