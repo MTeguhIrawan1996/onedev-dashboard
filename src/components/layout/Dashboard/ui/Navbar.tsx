@@ -2,8 +2,8 @@ import { Badge, Box, rem, Text } from '@mantine/core';
 
 import classes from '@/styles/Navbar.module.css';
 
-import { SearchButtonMenu, UserButton } from '@/components/elements/Button';
-import { PrimaryLink } from '@/components/elements/Link';
+import { SearchButtonMenu, UserButton } from '@/components/elements/buttons';
+import { PrimaryLink } from '@/components/elements/links';
 
 import { collections, links } from '@/utils/constans/dashboardNavigation';
 

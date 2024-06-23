@@ -22,6 +22,8 @@ module.exports = {
     'commitlint.config.cjs',
     '.prettierrc.cjs',
     '.eslintrc.cjs',
+    'swe-worker-development.js',
+    'sw.js',
   ],
   rules: {
     'no-unused-vars': 'off',

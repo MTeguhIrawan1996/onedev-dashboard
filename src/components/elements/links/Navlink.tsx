@@ -3,7 +3,8 @@ import * as React from 'react';
 
 import clasess from '@/components/elements/Link/Link.module.css';
 
-import { PrimaryLink } from '@/components/elements/Link/PrimaryLink';
+// eslint-disable-next-line import/order
+import { PrimaryLink } from '@/components/elements/links/PrimaryLink';
 
 interface INavlinkProps {
   leftIcon?: React.ReactNode;

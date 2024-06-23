@@ -2,7 +2,7 @@ import { Badge, Breadcrumbs, MantineTheme } from '@mantine/core';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
-import { PrimaryLink } from '@/components/elements/Link';
+import { PrimaryLink } from '@/components/elements/links';
 
 import { breadcrumbs } from '@/utils/constans/dashboardNavigation';
 

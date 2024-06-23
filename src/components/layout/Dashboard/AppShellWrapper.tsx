@@ -7,7 +7,7 @@ import {
   DrawerButton,
   SearchButtonMenu,
   ThemeButton,
-} from '@/components/elements/Button';
+} from '@/components/elements/buttons';
 import { Breadcrumb } from '@/components/layout/Dashboard/ui/Breadcrumb';
 import { Navbar } from '@/components/layout/Dashboard/ui/Navbar';
 

@@ -4,7 +4,7 @@ import { Box, Text } from '@mantine/core';
 import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 
-import { CommonDataTable } from '@/components/elements/DataTable';
+import { CommonDataTable } from '@/components/elements/data-tables';
 
 import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
 import { examplesParsers } from '@/utils/lib/searchParams';

@@ -5,8 +5,8 @@ import { useMediaQuery } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import * as React from 'react';
 
-import { FilterButton, PeriodButton } from '@/components/elements/Button';
-import { SearchBar } from '@/components/elements/Panel';
+import { FilterButton, PeriodButton } from '@/components/elements/buttons';
+import { SearchBar } from '@/components/elements/panels';
 
 export function ControlPanel() {
   const isBase = useMediaQuery(`(max-width: ${em(768)})`);
