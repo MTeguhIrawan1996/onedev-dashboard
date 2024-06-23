@@ -1,10 +1,9 @@
+// eslint-disable-next-line simple-import-sort/imports
 import { Text } from '@mantine/core';
 import * as React from 'react';
 
-import clasess from '@/components/elements/Link/Link.module.css';
-
-// eslint-disable-next-line import/order
 import { PrimaryLink } from '@/components/elements/links/PrimaryLink';
+import clasess from './Link.module.css';
 
 interface INavlinkProps {
   leftIcon?: React.ReactNode;
