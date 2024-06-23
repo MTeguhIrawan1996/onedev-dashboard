@@ -1,6 +1,6 @@
 import { defaultCache } from '@serwist/next/worker';
 import type { PrecacheEntry, SerwistGlobalConfig } from 'serwist';
-import { Serwist } from 'serwist';
+import { BackgroundSyncQueue, Serwist } from 'serwist';
 
 // This declares the value of `injectionPoint` to TypeScript.
 // `injectionPoint` is the string that will be replaced by the
@@ -13,6 +13,7 @@ declare global {
 }
 
 declare const self: ServiceWorkerGlobalScope;
+const queue = new BackgroundSyncQueue('test');
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -23,13 +24,7 @@ const serwist = new Serwist({
   fallbacks: {
     entries: [
       {
-        url: '/example', // the page that'll display if user goes offline
-        matcher({ request }) {
-          return request.destination === 'document';
-        },
-      },
-      {
-        url: '/overview', // the page that'll display if user goes offline
+        url: '/offline', // the page that'll display if user goes offline
         matcher({ request }) {
           return request.destination === 'document';
         },
@@ -39,3 +34,24 @@ const serwist = new Serwist({
 });
 
 serwist.addEventListeners();
+// disableDevLogs();
+
+self.addEventListener('fetch', (event) => {
+  // Add in your own criteria here to return early if this
+  // isn't a request that should use background sync.
+  if (event.request.method !== 'POST') {
+    return;
+  }
+
+  const backgroundSync = async () => {
+    try {
+      const response = await fetch(event.request.clone());
+      return response;
+    } catch (error) {
+      await queue.pushRequest({ request: event.request });
+      return Response.error();
+    }
+  };
+
+  event.respondWith(backgroundSync());
+});

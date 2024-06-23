@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { ControlPanel } from '@/components/ui/templates';
 import { DashboardWrapper, InnerWrapper } from '@/components/ui/wrapper';
 
@@ -9,7 +11,11 @@ export default function ExampleLayout({
   return (
     <InnerWrapper title='Exampel App'>
       <DashboardWrapper
-        renderItem={<ControlPanel />}
+        renderItem={
+          <React.Suspense>
+            <ControlPanel />
+          </React.Suspense>
+        }
         paperProps={{
           py: 'xl',
         }}

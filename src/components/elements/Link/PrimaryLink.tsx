@@ -6,7 +6,7 @@ export type PrimaryLinkProps = {
   openNewTab?: boolean;
   className?: string;
   children: React.ReactNode;
-};
+} & React.ComponentPropsWithRef<'a'>;
 
 export const PrimaryLink = React.forwardRef<
   HTMLAnchorElement,

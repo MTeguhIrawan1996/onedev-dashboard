@@ -10,6 +10,8 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 
+import { PrimaryLink } from '@/components/elements/Link';
+
 export default function Welcome() {
   const { setColorScheme, clearColorScheme } = useMantineColorScheme();
 
@@ -47,6 +49,15 @@ export default function Welcome() {
         <Button onClick={() => setColorScheme('dark')}>Dark</Button>
         <Button onClick={() => setColorScheme('auto')}>Auto</Button>
         <Button onClick={clearColorScheme}>Clear</Button>
+        <PrimaryLink
+          href='/overview'
+          onClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('clikc');
+          }}
+        >
+          Dashboard
+        </PrimaryLink>
       </Group>
     </Stack>
   );
