@@ -27,6 +27,9 @@ export default async (phase) => {
     },
     experimental: {
       optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+      serverActions: {
+        allowedOrigins: ['m97pj3q0-3000.asse.devtunnels.ms', 'localhost:3000'],
+      },
       missingSuspenseWithCSRBailout: false,
     },
   };

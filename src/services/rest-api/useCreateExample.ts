@@ -13,13 +13,16 @@ const mutationExample = async ({ title, author }: ExampelValues) => {
   };
 
   try {
-    const response = await fetch('http://localhost:3004/books', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      'https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(value),
       },
-      body: JSON.stringify(value),
-    });
+    );
     return response;
   } catch (error: any) {
     return Promise.reject(error);
@@ -34,6 +37,7 @@ export const useMutationExampel = ({
   onError?: (error: Error) => unknown;
 }) => {
   return useMutation<any, Error, ExampelValues>({
+    mutationKey: ['createExample'],
     mutationFn: async (props) => {
       const data = await mutationExample(props);
       return data;

@@ -28,6 +28,7 @@ export function ClientDataTable({ data }: IProps) {
     shallow: false,
   });
   const [opened, { open, close }] = useDisclosure(false);
+  // const queryClient = useQueryClient();
 
   const { l, p } = queryParams;
 
@@ -47,6 +48,18 @@ export function ClientDataTable({ data }: IProps) {
       methods.reset();
     },
   });
+
+  // queryClient.setMutationDefaults(['createExample'], {
+  //   mutationFn: async (props: ExampelValues) => {
+  //     console.log(props);
+  //     // to avoid clashes with our optimistic update when an offline mutation continues
+  //     await queryClient.cancelQueries({ queryKey: ['createExample'] });
+  //     return mutate({ title: props.title, author: props.author });
+  //   },
+  //   onSuccess: () => {
+  //     console.log('succes persist');
+  //   },
+  // });
 
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
     mutate({ title: value.title, author: value.author });
