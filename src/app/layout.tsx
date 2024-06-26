@@ -7,7 +7,7 @@ import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
 import './globals.css';
 
-import { MantineWrapper } from '@/components/ui/wrapper';
+import { ProviderWrapper } from '@/components/ui/wrapper';
 
 const roboto = Roboto({
   weight: ['400', '500', '700', '300'],
@@ -37,7 +37,7 @@ export default function RootLayout({
         <ColorSchemeScript defaultColorScheme='auto' />
       </head>
       <body className={roboto.className}>
-        <MantineWrapper>{children}</MantineWrapper>
+        <ProviderWrapper>{children}</ProviderWrapper>
       </body>
     </html>
   );

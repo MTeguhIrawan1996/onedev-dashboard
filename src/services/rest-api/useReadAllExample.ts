@@ -17,8 +17,8 @@ export async function getData({
   search = '',
 }: Partial<IRequest>): Promise<IExampleResponse[]> {
   const res = await fetch(
-    `https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books?page=${page}&limit=${limit}&search=${search}`,
-    { next: { revalidate: 3600 } },
+    `http://localhost:3004/books?_page=${page}&_limit=${limit}&q=${search}`,
+    { next: { revalidate: 1200, tags: ['example'] } },
   );
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

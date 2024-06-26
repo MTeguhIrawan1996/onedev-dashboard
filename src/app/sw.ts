@@ -1,6 +1,6 @@
 import { defaultCache } from '@serwist/next/worker';
 import type { PrecacheEntry, SerwistGlobalConfig } from 'serwist';
-import { BackgroundSyncQueue, Serwist } from 'serwist';
+import { BackgroundSyncQueue, disableDevLogs, Serwist } from 'serwist';
 
 // This declares the value of `injectionPoint` to TypeScript.
 // `injectionPoint` is the string that will be replaced by the
@@ -13,7 +13,10 @@ declare global {
 }
 
 declare const self: ServiceWorkerGlobalScope;
-const queue = new BackgroundSyncQueue('test');
+const queue = new BackgroundSyncQueue('example', {
+  maxRetentionTime: 24 * 60,
+  forceSyncFallback: true,
+});
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -34,11 +37,12 @@ const serwist = new Serwist({
 });
 
 serwist.addEventListeners();
-// disableDevLogs();
+disableDevLogs();
 
 self.addEventListener('fetch', (event) => {
   // Add in your own criteria here to return early if this
   // isn't a request that should use background sync.
+
   if (event.request.method !== 'POST') {
     return;
   }

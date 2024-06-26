@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ClientDataTable } from '@/components/features/Example/common/elements/ClientDataTable';
+import { ClientDataTable } from '@/components/features/Example/common/ui/ClientDataTable';
 
 import { getData } from '@/services/rest-api/useReadAllExample';
 import { examplesCache } from '@/utils/lib/searchParams';
