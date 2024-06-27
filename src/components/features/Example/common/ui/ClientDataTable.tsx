@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 'use client';
 
 import { Box, Text } from '@mantine/core';
@@ -46,6 +48,9 @@ export function ClientDataTable({ data }: IProps) {
       actionRevalidate({ tag: 'example' });
       close();
       methods.reset();
+    },
+    onError: (err) => {
+      console.log({ err });
     },
   });
 

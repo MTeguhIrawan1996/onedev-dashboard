@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { defaultCache } from '@serwist/next/worker';
 import type { PrecacheEntry, SerwistGlobalConfig } from 'serwist';
 import { BackgroundSyncQueue, Serwist } from 'serwist';
@@ -15,7 +16,7 @@ declare global {
 declare const self: ServiceWorkerGlobalScope;
 const queue = new BackgroundSyncQueue('example', {
   maxRetentionTime: 1,
-  forceSyncFallback: false,
+  forceSyncFallback: true,
 });
 
 const serwist = new Serwist({
@@ -36,7 +37,6 @@ const serwist = new Serwist({
   },
 });
 
-serwist.addEventListeners();
 // disableDevLogs();
 
 self.addEventListener('fetch', (event) => {
@@ -47,23 +47,32 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // console.log(event);
+  // console.log(event.request.clone);
+
   const backgroundSync = async () => {
     try {
       const response = await fetch(event.request.clone());
       return response;
     } catch (error) {
+      // console.log('SW ERR');
       await queue.pushRequest({ request: event.request });
+      self.registration.sync.register('example');
       return Response.error();
     }
   };
-
   event.respondWith(backgroundSync());
 });
 
-// self.addEventListener('sync', (event) => {
-//   // if (event.tag === 'example') {
-//   //   event.waitUntil(queue.replayRequests());
-//   // }
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'example') {
+    console.log('on SYNC');
+    event.waitUntil(
+      queue.replayRequests().catch((err) => {
+        console.error('Replay failed:', err);
+      }),
+    );
+  }
+});
 
-//   console.log(event);
-// });
+serwist.addEventListeners();

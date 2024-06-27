@@ -51,10 +51,10 @@ export default function Welcome() {
         <Button onClick={clearColorScheme}>Clear</Button>
         <PrimaryLink
           href='/overview'
-          onClick={() => {
-            // eslint-disable-next-line no-console
-            console.log('clikc');
-          }}
+          // onClick={() => {
+          //   // eslint-disable-next-line no-console
+          //   console.log('clikc');
+          // }}
         >
           Dashboard
         </PrimaryLink>

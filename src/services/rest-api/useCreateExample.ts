@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useMutation } from '@tanstack/react-query';
 
 export type ExampelValues = {
@@ -25,6 +26,7 @@ const mutationExample = async ({ title, author }: ExampelValues) => {
     );
     return response;
   } catch (error: any) {
+    console.log(error);
     return Promise.reject(error);
   }
 };
