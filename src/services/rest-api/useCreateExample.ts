@@ -6,7 +6,7 @@ export type ExampelValues = {
   author: string;
 };
 
-const mutationExample = async ({ title, author }: ExampelValues) => {
+export const mutationExample = async ({ title, author }: ExampelValues) => {
   const value = {
     title,
     author,
@@ -34,10 +34,11 @@ const mutationExample = async ({ title, author }: ExampelValues) => {
 export const useMutationExampel = ({
   onError,
   onSuccess,
+  onMutate,
 }: {
   onSuccess?: (success: any) => void;
   onError?: (error: Error) => unknown;
-  // onMutate?:
+  onMutate?: (v: any) => unknown;
 }) => {
   return useMutation<any, Error, ExampelValues>({
     mutationKey: ['createExample'],
@@ -45,7 +46,7 @@ export const useMutationExampel = ({
       const data = await mutationExample(props);
       return data;
     },
-
+    onMutate,
     onError,
     onSuccess,
   });

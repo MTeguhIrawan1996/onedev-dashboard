@@ -33,6 +33,9 @@ const queryClient = new QueryClient({
     onSuccess: (data) => {
       console.log('On Success Mutation Cache');
     },
+    onMutate: () => {
+      console.log('On mutate Mutation Cache');
+    },
     onError: (error) => {
       console.log('On Error Mutation Cache');
     },
@@ -46,8 +49,7 @@ export function ProviderWrapper({ children }: IProviderWrapperProps) {
       client={queryClient}
       onSuccess={() => {
         // resume mutations after initial restore from localStorage was successful
-        queryClient.resumePausedMutations().then((a) => {
-          console.log(a);
+        queryClient.resumePausedMutations().then(() => {
           queryClient.invalidateQueries();
         });
       }}

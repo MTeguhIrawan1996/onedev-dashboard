@@ -17,6 +17,7 @@ import { DashboardWrapper } from '@/components/ui/wrapper';
 import actionRevalidate from '@/services/actionRevalidate';
 import {
   ExampelValues,
+  mutationExample,
   useMutationExampel,
 } from '@/services/rest-api/useCreateExample';
 import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
@@ -44,7 +45,7 @@ export function ClientDataTable({ data }: IProps) {
     mode: 'onBlur',
   });
 
-  const { mutate, status, isPaused } = useMutationExampel({
+  const { mutate, status, isPaused, isPending } = useMutationExampel({
     onSuccess: () => {
       console.log('success Mutation action');
       actionRevalidate({ tag: 'example' });
@@ -55,10 +56,20 @@ export function ClientDataTable({ data }: IProps) {
       console.log('error Mutation action');
       console.log({ err });
     },
+    onMutate: (v) => {
+      console.log(v, 'onMutate');
+      if (!onlineManager.isOnline()) {
+        console.log(
+          'anda sedang offline, form tersimpan dipenyimpanan sementara',
+        );
+        close();
+        methods.reset();
+      }
+    },
   });
 
   console.log('status', status);
-  console.log('usPaused', isPaused);
+  console.log('isPaused', isPaused);
 
   console.log('onlineManager', onlineManager.isOnline());
 
@@ -82,18 +93,18 @@ export function ClientDataTable({ data }: IProps) {
   // }, []);
 
   queryClient.setMutationDefaults(['createExample'], {
+    // MUTATE AFTER ONLINE
     mutationFn: async (props: ExampelValues) => {
       console.log(props);
       // to avoid clashes with our optimistic update when an offline mutation continues
-
-      return mutate({ title: props.title, author: props.author });
+      return mutationExample({ title: props.title, author: props.author });
     },
     onSuccess: () => {
-      console.log('succes default');
+      actionRevalidate({ tag: 'example' });
     },
-    onError: () => {
-      console.log('error default');
-    },
+    // onError: () => {
+    //   console.log('error default');
+    // },
   });
 
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
@@ -147,7 +158,7 @@ export function ClientDataTable({ data }: IProps) {
         submitForm={handleSubmitForm}
         opened={opened}
         onClose={close}
-        isLoading={false}
+        isLoading={!isPaused && isPending}
       />
     </DashboardWrapper>
   );
