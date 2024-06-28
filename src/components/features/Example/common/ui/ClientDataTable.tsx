@@ -97,6 +97,7 @@ export function ClientDataTable({ data }: IProps) {
     mutationFn: async (props: ExampelValues) => {
       console.log(props);
       // to avoid clashes with our optimistic update when an offline mutation continues
+      await queryClient.cancelQueries({ queryKey: ['createExample'] });
       return mutationExample({ title: props.title, author: props.author });
     },
     onSuccess: () => {
