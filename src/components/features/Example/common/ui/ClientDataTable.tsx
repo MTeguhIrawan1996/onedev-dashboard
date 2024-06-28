@@ -17,7 +17,6 @@ import { DashboardWrapper } from '@/components/ui/wrapper';
 import actionRevalidate from '@/services/actionRevalidate';
 import {
   ExampelValues,
-  mutationExample,
   useMutationExampel,
 } from '@/services/rest-api/useCreateExample';
 import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
@@ -45,7 +44,7 @@ export function ClientDataTable({ data }: IProps) {
     mode: 'onBlur',
   });
 
-  const { mutate, status, isPaused, isPending } = useMutationExampel({
+  const { mutate, isPaused, isPending } = useMutationExampel({
     onSuccess: () => {
       console.log('success Mutation action');
       actionRevalidate({ tag: 'example' });
@@ -67,9 +66,6 @@ export function ClientDataTable({ data }: IProps) {
       }
     },
   });
-
-  console.log('status', status);
-  console.log('isPaused', isPaused);
 
   console.log('onlineManager', onlineManager.isOnline());
 
@@ -97,8 +93,7 @@ export function ClientDataTable({ data }: IProps) {
     mutationFn: async (props: ExampelValues) => {
       console.log(props);
       // to avoid clashes with our optimistic update when an offline mutation continues
-      await queryClient.cancelQueries({ queryKey: ['createExample'] });
-      return mutationExample({ title: props.title, author: props.author });
+      return mutate({ title: props.title, author: props.author });
     },
     onSuccess: () => {
       actionRevalidate({ tag: 'example' });

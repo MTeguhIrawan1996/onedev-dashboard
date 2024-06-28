@@ -49,6 +49,7 @@ export function ProviderWrapper({ children }: IProviderWrapperProps) {
       client={queryClient}
       onSuccess={() => {
         // resume mutations after initial restore from localStorage was successful
+        console.log('resume');
         queryClient.resumePausedMutations().then(() => {
           queryClient.invalidateQueries();
         });
