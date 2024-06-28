@@ -37,6 +37,7 @@ export const useMutationExampel = ({
 }: {
   onSuccess?: (success: any) => void;
   onError?: (error: Error) => unknown;
+  // onMutate?:
 }) => {
   return useMutation<any, Error, ExampelValues>({
     mutationKey: ['createExample'],
@@ -44,6 +45,7 @@ export const useMutationExampel = ({
       const data = await mutationExample(props);
       return data;
     },
+
     onError,
     onSuccess,
   });

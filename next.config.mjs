@@ -42,7 +42,7 @@ export default async (phase) => {
       swDest: 'public/sw.js',
       reloadOnOnline: true,
       cacheOnNavigation: true,
-      additionalPrecacheEntries: [{ url: '/offline' }],
+      additionalPrecacheEntries: [{ url: '/~offline' }],
     });
     return withBundleAnalyzer(withSerwist(nextConfig));
   }

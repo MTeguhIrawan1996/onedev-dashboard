@@ -4,6 +4,7 @@
 
 import { Box, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { onlineManager, useQueryClient } from '@tanstack/react-query';
 import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -30,7 +31,7 @@ export function ClientDataTable({ data }: IProps) {
     shallow: false,
   });
   const [opened, { open, close }] = useDisclosure(false);
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { l, p } = queryParams;
 
@@ -43,28 +44,57 @@ export function ClientDataTable({ data }: IProps) {
     mode: 'onBlur',
   });
 
-  const { mutate, isPending } = useMutationExampel({
+  const { mutate, status, isPaused } = useMutationExampel({
     onSuccess: () => {
+      console.log('success Mutation action');
       actionRevalidate({ tag: 'example' });
       close();
       methods.reset();
     },
     onError: (err) => {
+      console.log('error Mutation action');
       console.log({ err });
     },
   });
 
-  // queryClient.setMutationDefaults(['createExample'], {
-  //   mutationFn: async (props: ExampelValues) => {
-  //     console.log(props);
-  //     // to avoid clashes with our optimistic update when an offline mutation continues
-  //     await queryClient.cancelQueries({ queryKey: ['createExample'] });
-  //     return mutate({ title: props.title, author: props.author });
-  //   },
-  //   onSuccess: () => {
-  //     console.log('succes persist');
-  //   },
-  // });
+  console.log('status', status);
+  console.log('usPaused', isPaused);
+
+  console.log('onlineManager', onlineManager.isOnline());
+
+  // React.useEffect(() => {
+  //   console.log('foo');
+  //   if (
+  //     typeof window !== 'undefined' &&
+  //     'serviceWorker' in navigator &&
+  //     window.serwist !== undefined
+  //   ) {
+  //     console.log('revalidate');
+  //     navigator.serviceWorker.addEventListener('message', (event) => {
+  //       console.log(event);
+  //       if (event.data && event.data.type === 'REPLAY_COMPLETE') {
+  //         console.log('rep Com');
+  //         // Trigger revalidation
+  //         actionRevalidate({ tag: 'example' });
+  //       }
+  //     });
+  //   }
+  // }, []);
+
+  queryClient.setMutationDefaults(['createExample'], {
+    mutationFn: async (props: ExampelValues) => {
+      console.log(props);
+      // to avoid clashes with our optimistic update when an offline mutation continues
+
+      return mutate({ title: props.title, author: props.author });
+    },
+    onSuccess: () => {
+      console.log('succes default');
+    },
+    onError: () => {
+      console.log('error default');
+    },
+  });
 
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
     mutate({ title: value.title, author: value.author });
@@ -117,7 +147,7 @@ export function ClientDataTable({ data }: IProps) {
         submitForm={handleSubmitForm}
         opened={opened}
         onClose={close}
-        isLoading={isPending}
+        isLoading={false}
       />
     </DashboardWrapper>
   );
