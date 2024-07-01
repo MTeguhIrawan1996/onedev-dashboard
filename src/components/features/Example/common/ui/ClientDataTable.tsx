@@ -17,6 +17,7 @@ import { DashboardWrapper } from '@/components/ui/wrapper';
 import actionRevalidate from '@/services/actionRevalidate';
 import {
   ExampelValues,
+  mutationExample,
   useMutationExampel,
 } from '@/services/rest-api/useCreateExample';
 import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
@@ -69,31 +70,12 @@ export function ClientDataTable({ data }: IProps) {
 
   console.log('onlineManager', onlineManager.isOnline());
 
-  // React.useEffect(() => {
-  //   console.log('foo');
-  //   if (
-  //     typeof window !== 'undefined' &&
-  //     'serviceWorker' in navigator &&
-  //     window.serwist !== undefined
-  //   ) {
-  //     console.log('revalidate');
-  //     navigator.serviceWorker.addEventListener('message', (event) => {
-  //       console.log(event);
-  //       if (event.data && event.data.type === 'REPLAY_COMPLETE') {
-  //         console.log('rep Com');
-  //         // Trigger revalidation
-  //         actionRevalidate({ tag: 'example' });
-  //       }
-  //     });
-  //   }
-  // }, []);
-
   queryClient.setMutationDefaults(['createExample'], {
     // MUTATE AFTER ONLINE
     mutationFn: async (props: ExampelValues) => {
       console.log(props);
       // to avoid clashes with our optimistic update when an offline mutation continues
-      return mutate({ title: props.title, author: props.author });
+      return mutationExample({ title: props.title, author: props.author });
     },
     onSuccess: () => {
       actionRevalidate({ tag: 'example' });
