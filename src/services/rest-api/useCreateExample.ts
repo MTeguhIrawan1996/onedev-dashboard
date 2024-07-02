@@ -43,7 +43,6 @@ export const useMutationExampel = ({
 
   return useMutation<any, Error, ExampelValues>({
     mutationKey: exampleKeys.post(),
-    retry: 1,
     // mutationFn: async (props) => {
     //   const data = await mutationExample(props);
     //   return data;
