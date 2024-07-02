@@ -52,10 +52,10 @@ export const useMutationExampel = ({
 
   return useMutation<any, Error, ExampelValues>({
     mutationKey: exampleKeys.post(),
-    mutationFn: async (props) => {
-      const data = await mutationExample(props);
-      return data;
-    },
+    // mutationFn: async (props) => {
+    //   const data = await mutationExample(props);
+    //   return data;
+    // },
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: exampleKeys.list({ ...qKeyProps }),
