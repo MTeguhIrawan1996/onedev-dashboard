@@ -12,29 +12,20 @@ export type ExampelValues = {
   author: string;
 };
 
-export const mutationExample = async ({ title, author }: ExampelValues) => {
+export const mutationExample = ({ title, author }: ExampelValues) => {
   const value = {
     title,
     author,
     createdAt: new Date(),
   };
 
-  try {
-    const response = await fetch(
-      'https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(value),
-      },
-    );
-    return response;
-  } catch (error: any) {
-    console.log(error);
-    return Promise.reject(error);
-  }
+  return fetch('https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(value),
+  });
 };
 
 export const useMutationExampel = ({
