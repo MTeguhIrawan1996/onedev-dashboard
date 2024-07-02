@@ -24,9 +24,12 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       gcTime: 1000 * 60 * 60 * 24, // 24 hours
-      staleTime: 2000,
+      staleTime: 5 * 60 * 1000,
       retry: 0,
     },
+    // mutations:{
+
+    // }
   },
   // configure global cache callbacks to show toast notifications
   mutationCache: new MutationCache({
@@ -37,6 +40,7 @@ const queryClient = new QueryClient({
       console.log('On mutate Mutation Cache');
     },
     onError: (error) => {
+      console.log(error);
       console.log('On Error Mutation Cache');
     },
   }),

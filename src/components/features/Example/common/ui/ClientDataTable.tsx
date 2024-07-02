@@ -14,27 +14,36 @@ import { FormModal } from '@/components/ui/modals/FormModal';
 import { ControlPanel } from '@/components/ui/templates';
 import { DashboardWrapper } from '@/components/ui/wrapper';
 
-import actionRevalidate from '@/services/actionRevalidate';
 import {
   ExampelValues,
   mutationExample,
   useMutationExampel,
 } from '@/services/rest-api/useCreateExample';
-import { IExampleResponse } from '@/services/rest-api/useReadAllExample';
+import {
+  exampleKeys,
+  useReadAllClientExample,
+} from '@/services/rest-api/useReadAllExample';
 import { examplesParsers } from '@/utils/lib/searchParams';
 
-type IProps = {
-  data: IExampleResponse[];
-};
+// type IProps = {
+//   data: IExampleResponse[];
+// };
 
-export function ClientDataTable({ data }: IProps) {
+export function ClientDataTable() {
   const [queryParams, setQueryParams] = useQueryStates(examplesParsers, {
     shallow: false,
   });
   const [opened, { open, close }] = useDisclosure(false);
   const queryClient = useQueryClient();
 
-  const { l, p } = queryParams;
+  const { l, p, search } = queryParams;
+
+  const { data: exampleData, isPending: isPandingReadAll } =
+    useReadAllClientExample({
+      page: p,
+      limit: l,
+      search,
+    });
 
   const methods = useForm<any>({
     // resolver: zodResolver(locationMutationValidation),
@@ -46,9 +55,14 @@ export function ClientDataTable({ data }: IProps) {
   });
 
   const { mutate, isPaused, isPending } = useMutationExampel({
+    qKeyProps: {
+      limit: l,
+      page: p,
+      search,
+    },
     onSuccess: () => {
       console.log('success Mutation action');
-      actionRevalidate({ tag: 'example' });
+      // actionRevalidate({ tag: 'example' });
       close();
       methods.reset();
     },
@@ -56,8 +70,7 @@ export function ClientDataTable({ data }: IProps) {
       console.log('error Mutation action');
       console.log({ err });
     },
-    onMutate: (v) => {
-      console.log(v, 'onMutate');
+    onMutate: () => {
       if (!onlineManager.isOnline()) {
         console.log(
           'anda sedang offline, form tersimpan dipenyimpanan sementara',
@@ -70,20 +83,21 @@ export function ClientDataTable({ data }: IProps) {
 
   console.log('onlineManager', onlineManager.isOnline());
 
-  queryClient.setMutationDefaults(['createExample'], {
+  queryClient.setMutationDefaults(exampleKeys.post(), {
     // MUTATE AFTER ONLINE
     mutationFn: async (props: ExampelValues) => {
       console.log(props);
-      // to avoid clashes with our optimistic update when an offline mutation continues
       return mutationExample({ title: props.title, author: props.author });
     },
     onSuccess: () => {
-      actionRevalidate({ tag: 'example' });
+      console.log('succes After Offline');
     },
     // onError: () => {
     //   console.log('error default');
     // },
   });
+
+  console.log(exampleData);
 
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
     mutate({ title: value.title, author: value.author });
@@ -98,13 +112,16 @@ export function ClientDataTable({ data }: IProps) {
     >
       <CommonDataTable
         tableProps={{
-          records: data,
+          records: exampleData || [],
+          fetching: isPandingReadAll,
           columns: [
             {
               accessor: 'id',
               title: '#',
               sortable: true,
               width: '0%',
+              render: (record) =>
+                exampleData ? exampleData.indexOf(record) + 1 : 1,
             },
             { accessor: 'title' },
             {
@@ -112,6 +129,14 @@ export function ClientDataTable({ data }: IProps) {
               render: ({ author }) => (
                 <Box fw={700} c='blue'>
                   {author}
+                </Box>
+              ),
+            },
+            {
+              accessor: 'status',
+              render: ({ isTemporary }) => (
+                <Box fw={700} c='blue'>
+                  {isTemporary ? 'Temporary' : 'Draft'}
                 </Box>
               ),
             },
