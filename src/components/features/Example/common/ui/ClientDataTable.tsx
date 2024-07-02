@@ -4,7 +4,7 @@
 
 import { Box, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { onlineManager, useQueryClient } from '@tanstack/react-query';
+import { onlineManager } from '@tanstack/react-query';
 import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommonDataTable } from '@/components/elements/data-tables';
 import { FormModal } from '@/components/ui/modals/FormModal';
 import { ControlPanel } from '@/components/ui/templates';
-import { DashboardWrapper } from '@/components/ui/wrapper';
+import { DashboardWrapper, queryClient } from '@/components/ui/wrapper';
 
 import {
   ExampelValues,
@@ -29,12 +29,26 @@ import { examplesParsers } from '@/utils/lib/searchParams';
 //   data: IExampleResponse[];
 // };
 
+queryClient.setMutationDefaults(exampleKeys.post(), {
+  // MUTATE AFTER ONLINE
+  mutationFn: async (props: ExampelValues) => {
+    console.log(props);
+    return mutationExample({ title: props.title, author: props.author });
+  },
+  onSuccess: () => {
+    console.log('succes After Offline');
+  },
+  // onError: () => {
+  //   console.log('error default');
+  // },
+});
+
 export function ClientDataTable() {
   const [queryParams, setQueryParams] = useQueryStates(examplesParsers, {
     shallow: false,
   });
   const [opened, { open, close }] = useDisclosure(false);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const { l, p, search } = queryParams;
 
@@ -84,20 +98,6 @@ export function ClientDataTable() {
   console.log(isPaused);
 
   console.log('onlineManager', onlineManager.isOnline());
-
-  queryClient.setMutationDefaults(exampleKeys.post(), {
-    // MUTATE AFTER ONLINE
-    mutationFn: async (props: ExampelValues) => {
-      console.log(props);
-      return mutationExample({ title: props.title, author: props.author });
-    },
-    onSuccess: () => {
-      console.log('succes After Offline');
-    },
-    // onError: () => {
-    //   console.log('error default');
-    // },
-  });
 
   console.log(exampleData);
 
