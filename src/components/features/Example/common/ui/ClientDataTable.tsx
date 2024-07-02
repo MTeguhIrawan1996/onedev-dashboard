@@ -81,6 +81,8 @@ export function ClientDataTable() {
     },
   });
 
+  console.log(isPaused);
+
   console.log('onlineManager', onlineManager.isOnline());
 
   queryClient.setMutationDefaults(exampleKeys.post(), {
