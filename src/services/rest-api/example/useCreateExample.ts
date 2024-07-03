@@ -1,31 +1,32 @@
 /* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import api from '@/services/rest-api/api';
 import {
   exampleKeys,
   IExampleResponse,
   IRequest,
-} from '@/services/rest-api/useReadAllExample';
+} from '@/services/rest-api/example/useReadAllExample';
 
 export type ExampelValues = {
   title: string;
   author: string;
 };
 
-export const mutationExample = ({ title, author }: ExampelValues) => {
+export const mutationExample = async ({ title, author }: ExampelValues) => {
   const value = {
     title,
     author,
     createdAt: new Date(),
   };
 
-  return fetch('https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(value),
-  });
+  const response = await api.post<any>(
+    'https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books',
+    value,
+    {},
+  );
+  console.log(response);
+  return response;
 };
 
 export const useMutationExampel = ({

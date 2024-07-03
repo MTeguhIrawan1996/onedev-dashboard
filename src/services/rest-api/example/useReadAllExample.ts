@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
+import api from '@/services/rest-api/api';
+
 export type IExampleResponse = {
   createdAt: string;
   isTemporary: boolean;
@@ -41,16 +43,11 @@ export const readAllClientExample = async ({
   page = 1,
   limit = 10,
   search = '',
-}: Partial<IRequest>): Promise<IExampleResponse[]> => {
-  try {
-    const response = await fetch(
-      `https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books?page=${page}&limit=${limit}&search=${search}`,
-    );
-    const data: IExampleResponse[] = await response.json();
-    return data;
-  } catch (error: any) {
-    return Promise.reject(error);
-  }
+}: Partial<IRequest>) => {
+  const response = await api.get<IExampleResponse>(
+    `https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books?page=${page}&limit=${limit}&search=${search}`,
+  );
+  return response.data;
 };
 
 export const useReadAllClientExample = ({

@@ -18,11 +18,11 @@ import {
   ExampelValues,
   mutationExample,
   useMutationExampel,
-} from '@/services/rest-api/useCreateExample';
+} from '@/services/rest-api/example/useCreateExample';
 import {
   exampleKeys,
   useReadAllClientExample,
-} from '@/services/rest-api/useReadAllExample';
+} from '@/services/rest-api/example/useReadAllExample';
 import { examplesParsers } from '@/utils/lib/searchParams';
 
 // type IProps = {
@@ -70,7 +70,7 @@ export function ClientDataTable() {
     mode: 'onBlur',
   });
 
-  const { mutate, isPaused, isPending } = useMutationExampel({
+  const { mutateAsync, isPaused, isPending } = useMutationExampel({
     qKeyProps: {
       limit: l,
       page: p,
@@ -101,10 +101,8 @@ export function ClientDataTable() {
 
   console.log('onlineManager', onlineManager.isOnline());
 
-  console.log(exampleData);
-
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
-    mutate({ title: value.title, author: value.author });
+    await mutateAsync({ title: value.title, author: value.author });
   };
 
   return (
