@@ -44,16 +44,20 @@ export const queryClient = new QueryClient({
 });
 
 export function ProviderWrapper({ children }: IProviderWrapperProps) {
+  const [resuming, setResuming] = React.useState(false);
   return (
     <PersistQueryClientProvider
       persistOptions={{ persister }}
       client={queryClient}
       onSuccess={() => {
-        // resume mutations after initial restore from localStorage was successful
-        console.log('resume');
-        queryClient.resumePausedMutations().then(() => {
-          queryClient.invalidateQueries();
-        });
+        if (!resuming) {
+          console.log('resume');
+          setResuming(true);
+          queryClient.resumePausedMutations().then(() => {
+            queryClient.invalidateQueries();
+            setResuming(false);
+          });
+        }
       }}
     >
       <MantineProvider theme={mantinetheme} defaultColorScheme='auto'>
