@@ -25,8 +25,14 @@ function handleError(error: any) {
   return Promise.reject(error);
 }
 
-const get = async <T>(resource: string): Promise<AxiosResponse<T[], any>> => {
-  return axios.get(resource).then(handleResponse).catch(handleError);
+const get = async <T>(resource: string): Promise<AxiosResponse<T, any>> => {
+  try {
+    const response = await axios.get(resource);
+    return response;
+  } catch (error: any) {
+    return Promise.reject(error);
+  }
+  // return axios.get(resource).then(handleResponse).catch(handleError);
 };
 
 const post = async <T>(
@@ -34,10 +40,12 @@ const post = async <T>(
   model: object,
   options?: object,
 ): Promise<T> => {
-  return axios
-    .post(resource, model, options)
-    .then(handleResponse)
-    .catch(handleError);
+  try {
+    const response = await axios.post(resource, model, options);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error);
+  }
 };
 
 const put = async <T>(resource: string, model: object): Promise<T> => {

@@ -2,13 +2,14 @@
 
 'use client';
 
-import { Box, Text } from '@mantine/core';
+import { Badge, Box, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { onlineManager, useQueryClient } from '@tanstack/react-query';
+import { onlineManager } from '@tanstack/react-query';
 import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { PrimaryButton } from '@/components/elements/buttons';
 import { CommonDataTable } from '@/components/elements/data-tables';
 import { FormModal } from '@/components/ui/modals/FormModal';
 import { ControlPanel } from '@/components/ui/templates';
@@ -16,13 +17,10 @@ import { DashboardWrapper } from '@/components/ui/wrapper';
 
 import {
   ExampelValues,
-  mutationExample,
   useMutationExampel,
+  useMutationExampelSync,
 } from '@/services/rest-api/example/useCreateExample';
-import {
-  exampleKeys,
-  useReadAllClientExample,
-} from '@/services/rest-api/example/useReadAllExample';
+import { useReadAllClientExample } from '@/services/rest-api/example/useReadAllExample';
 import { examplesParsers } from '@/utils/lib/searchParams';
 
 // type IProps = {
@@ -34,25 +32,19 @@ export function ClientDataTable() {
     shallow: false,
   });
   const [opened, { open, close }] = useDisclosure(false);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const { l, p, search } = queryParams;
-  queryClient.setMutationDefaults(exampleKeys.all(), {
-    // MUTATE AFTER ONLINE
-    mutationFn: async (props: ExampelValues) => {
-      console.log('Mutation OFFLINE');
-      await queryClient.cancelQueries({
-        queryKey: exampleKeys.list({ limit: l, page: p, search }),
-      });
-      return mutationExample({ title: props.title, author: props.author });
-    },
-    onSuccess: () => {
-      console.log('succes After Offline');
-    },
-    // onError: () => {
-    //   console.log('error default');
-    // },
-  });
+  // queryClient.setMutationDefaults(exampleKeys.all(), {
+  //   // MUTATE AFTER ONLINE
+  //   mutationFn: mutationExample,
+  //   onSuccess: () => {
+  //     console.log('succes After Offline');
+  //   },
+  //   // onError: () => {
+  //   //   console.log('error default');
+  //   // },
+  // });
 
   const { data: exampleData, isPending: isPandingReadAll } =
     useReadAllClientExample({
@@ -61,7 +53,7 @@ export function ClientDataTable() {
       search,
     });
 
-  const methods = useForm<any>({
+  const methods = useForm<ExampelValues>({
     // resolver: zodResolver(locationMutationValidation),
     defaultValues: {
       title: '',
@@ -82,9 +74,8 @@ export function ClientDataTable() {
       close();
       methods.reset();
     },
-    onError: (err) => {
+    onError: () => {
       console.log('error Mutation action');
-      console.log({ err });
     },
     onMutate: () => {
       if (!onlineManager.isOnline()) {
@@ -97,13 +88,22 @@ export function ClientDataTable() {
     },
   });
 
-  console.log(isPaused);
-
-  console.log('onlineManager', onlineManager.isOnline());
+  const { mutate, isPending: isPendingSync } = useMutationExampelSync({
+    qKeyProps: {
+      limit: l,
+      page: p,
+      search,
+    },
+  });
 
   const handleSubmitForm: SubmitHandler<ExampelValues> = async (value) => {
-    await mutateAsync({ title: value.title, author: value.author });
+    await mutateAsync({
+      title: value.title,
+      author: value.author,
+    });
   };
+
+  const isOnline = onlineManager.isOnline();
 
   return (
     <DashboardWrapper
@@ -112,6 +112,11 @@ export function ClientDataTable() {
         py: 'xl',
       }}
     >
+      <Badge>{isOnline ? 'ONLINE' : 'OFFLINE'}</Badge>
+      <PrimaryButton
+        label={`Sync ${isPendingSync ? 'sync....' : 'complated'}`}
+        onClick={() => mutate()}
+      />
       <CommonDataTable
         tableProps={{
           records: exampleData || [],

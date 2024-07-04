@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { db } from '@/services/dexie/db';
 import api from '@/services/rest-api/api';
 
 export type IExampleResponse = {
-  createdAt: string;
-  isTemporary: boolean;
+  id: string;
   title: string;
   author: string;
-  id: string;
+  createdAt: string;
+  isTemporary: boolean;
 };
 
 export type IRequest = {
@@ -20,6 +21,7 @@ export const exampleKeys = {
   all: () => ['example'],
   list: (props: Partial<IRequest>) => [...exampleKeys.all(), { ...props }],
   post: () => [...exampleKeys.all(), 'post'],
+  sync: () => [...exampleKeys.all(), 'sync'],
 };
 
 export async function getData({
@@ -39,14 +41,19 @@ export async function getData({
   return data;
 }
 
+export const getBooksIndexDB = async () => {
+  return db.books.toArray();
+};
+
 export const readAllClientExample = async ({
   page = 1,
   limit = 10,
   search = '',
 }: Partial<IRequest>) => {
-  const response = await api.get<IExampleResponse>(
-    `https://66724f8a6ca902ae11afcca9.mockapi.io/api/v1/books?page=${page}&limit=${limit}&search=${search}`,
+  const response = await api.get<IExampleResponse[]>(
+    `/api/v1/books?page=${page}&limit=${limit}&search=${search}`,
   );
+  // console.log(response);
   return response.data;
 };
 
@@ -57,10 +64,7 @@ export const useReadAllClientExample = ({
 }: Partial<IRequest>) => {
   return useQuery<IExampleResponse[]>({
     queryKey: exampleKeys.list({ limit, page, search }),
-    queryFn: async () => {
-      const data = await readAllClientExample({ limit, page, search });
-      return data;
-    },
+    queryFn: () => readAllClientExample({ limit, page, search }),
     select: (data) => {
       const newData: IExampleResponse[] = data.map((v) => {
         const newObj = {

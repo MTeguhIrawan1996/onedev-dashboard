@@ -32,6 +32,11 @@ export function FormModal({
                 name='author'
                 label='Author'
               />
+              {/* <FormController
+                control='text-input'
+                name='content'
+                label='Content'
+              /> */}
             </SimpleGrid>
             <PrimaryButton type='submit' label='Submit' loading={isLoading} />
           </Stack>

@@ -16,6 +16,7 @@ export const env = createEnv({
 
   client: {
     NEXT_PUBLIC_GA_ID: z.string().min(1),
+    NEXT_PUBLIC_REST_API_URL: z.string().min(10),
   },
 
   /**
