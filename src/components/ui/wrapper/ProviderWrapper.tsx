@@ -1,6 +1,3 @@
-/* eslint-disable unused-imports/no-unused-vars */
-/* eslint-disable no-console */
-
 'use client';
 
 import { MantineProvider } from '@mantine/core';
@@ -14,10 +11,6 @@ export interface IProviderWrapperProps {
   children: React.ReactNode;
 }
 
-// const persister = createSyncStoragePersister({
-//   storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-// });
-
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -26,37 +19,11 @@ export const queryClient = new QueryClient({
       retry: 0,
     },
   },
-  // configure global cache callbacks to show toast notifications
-  // mutationCache: new MutationCache({
-  //   onSuccess: (data) => {
-  //     console.log('On Success Mutation Cache');
-  //   },
-  //   onMutate: () => {
-  //     console.log('On mutate Mutation Cache');
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //     console.log('On Error Mutation Cache');
-  //   },
-  // }),
 });
 
 export function ProviderWrapper({ children }: IProviderWrapperProps) {
   return (
-    <QueryClientProvider
-      // persistOptions={{ persister }}
-      client={queryClient}
-      // onSuccess={() => {
-      //   if (!resuming) {
-      //     console.log('resume');
-      //     setResuming(true);
-      //     queryClient.resumePausedMutations().then(() => {
-      //       queryClient.invalidateQueries();
-      //       setResuming(false);
-      //     });
-      //   }
-      // }}
-    >
+    <QueryClientProvider client={queryClient}>
       <MantineProvider theme={mantinetheme} defaultColorScheme='auto'>
         {children}
       </MantineProvider>
