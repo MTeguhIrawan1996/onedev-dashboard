@@ -15,8 +15,8 @@ import {
   SearchButtonMenu,
   ThemeButton,
 } from '@/components/elements';
-import { Breadcrumb } from '@/components/layout/dashboard_temp/ui/Breadcrumb';
-import { Navbar } from '@/components/layout/dashboard_temp/ui/Navbar';
+import { Breadcrumb } from '@/components/layout/dashboard/ui/Breadcrumb';
+import { Navbar } from '@/components/layout/dashboard/ui/Navbar';
 
 import { signout } from '@/app/(auth)/login/actions';
 
