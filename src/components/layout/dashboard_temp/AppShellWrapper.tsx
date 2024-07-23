@@ -1,17 +1,26 @@
 'use client';
 
-import { AppShell, Box, Container, Group, Stack } from '@mantine/core';
-import { IconBurger } from '@tabler/icons-react';
+import {
+  ActionIcon,
+  AppShell,
+  Box,
+  Container,
+  Group,
+  Stack,
+} from '@mantine/core';
+import { IconBurger, IconLogout } from '@tabler/icons-react';
 
 import {
   DrawerButton,
   SearchButtonMenu,
   ThemeButton,
-} from '@/components/elements/buttons';
-import { Breadcrumb } from '@/components/layout/Dashboard/ui/Breadcrumb';
-import { Navbar } from '@/components/layout/Dashboard/ui/Navbar';
+} from '@/components/elements';
+import { Breadcrumb } from '@/components/layout/dashboard_temp/ui/Breadcrumb';
+import { Navbar } from '@/components/layout/dashboard_temp/ui/Navbar';
 
-export default function AppShellWrapper({
+import { signout } from '@/app/(auth)/login/actions';
+
+export function AppShellWrapper({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -29,10 +38,23 @@ export default function AppShellWrapper({
             <IconBurger size={30} />
             <Group>
               <Group>
-                <ThemeButton />
                 <DrawerButton drawerContent={<Navbar />} />
               </Group>
               <SearchButtonMenu w={300} fullWidth={false} mb={0} />
+              <ThemeButton />
+              <ActionIcon
+                size='md'
+                variant='light'
+                aria-label='Logout'
+                onClick={async () => {
+                  await signout();
+                }}
+              >
+                <IconLogout
+                  style={{ width: '70%', height: '70%' }}
+                  stroke={1.2}
+                />
+              </ActionIcon>
             </Group>
           </Group>
           <Box px='md'>

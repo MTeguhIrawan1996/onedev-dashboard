@@ -7,7 +7,7 @@ import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
 import './globals.css';
 
-import { ProviderWrapper } from '@/components/ui/wrapper';
+import { ProviderWrapper } from '@/components/layout';
 
 const roboto = Roboto({
   weight: ['400', '500', '700', '300'],

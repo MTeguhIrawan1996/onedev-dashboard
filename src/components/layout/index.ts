@@ -1,3 +1,2 @@
-import AppShellWrapper from '@/components/layout/Dashboard/AppShellWrapper';
-
-export { AppShellWrapper };
+export * from '@/components/layout/dashboard_temp';
+export * from '@/components/layout/wrapper';

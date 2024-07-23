@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ClientDataTable } from '@/components/features/Example/common/ui/ClientDataTable';
+import { ClientDataTable } from '@/components/features/dashboard/Example/common/ui/ClientDataTable';
 
 export const ExampleList = async () => {
   // const limit = examplesCache.get('l');

@@ -1,4 +1,3 @@
-import LoginPage from '@/components/features/auth/Login';
-import ExamplePage from '@/components/features/Example/common';
-
-export { ExamplePage, LoginPage };
+export * from '@/components/features/auth';
+export * from '@/components/features/dashboard';
+export * from '@/components/features/root';

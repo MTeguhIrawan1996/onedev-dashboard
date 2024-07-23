@@ -14,7 +14,12 @@ export function DrawerButton({ drawerContent }: IDrawerButtonProps) {
 
   return (
     <>
-      <ActionIcon size='md' aria-label='MenuIcon' onClick={toggle}>
+      <ActionIcon
+        size='md'
+        variant='light'
+        aria-label='MenuIcon'
+        onClick={toggle}
+      >
         <IconBurger style={{ width: '70%', height: '70%' }} stroke={1.2} />
       </ActionIcon>
       <Drawer

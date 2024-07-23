@@ -10,9 +10,9 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 
-import { PrimaryLink } from '@/components/elements/links';
+import { PrimaryLink } from '@/components/elements';
 
-export default function Welcome() {
+export default function WelcomePage() {
   const { setColorScheme, clearColorScheme } = useMantineColorScheme();
 
   return (

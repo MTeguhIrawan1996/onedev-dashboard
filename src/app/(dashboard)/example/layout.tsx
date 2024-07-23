@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { InnerWrapper } from '@/components/ui/wrapper';
+import { InnerWrapper } from '@/components/layout';
 
 export default function ExampleLayout({
   children,

@@ -1,5 +1,5 @@
-import Welcome from '@/components/features/Welcome/Welcome';
+import { WelcomePage } from '@/components/features';
 
 export default function Home() {
-  return <Welcome />;
+  return <WelcomePage />;
 }

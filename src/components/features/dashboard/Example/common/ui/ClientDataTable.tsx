@@ -9,11 +9,9 @@ import { useQueryStates } from 'nuqs';
 import * as React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { PrimaryButton } from '@/components/elements/buttons';
-import { CommonDataTable } from '@/components/elements/data-tables';
-import { FormModal } from '@/components/ui/modals/FormModal';
-import { ControlPanel } from '@/components/ui/templates';
-import { DashboardWrapper } from '@/components/ui/wrapper';
+import { CommonDataTable, PrimaryButton } from '@/components/elements';
+import { DashboardWrapper } from '@/components/layout';
+import { ControlPanel, FormModal } from '@/components/ui';
 
 import {
   ExampelValues,
