@@ -1,8 +1,12 @@
 import * as React from 'react';
 
-import { TextAreaInputRhf, TextInputRhf } from '@/components/elements/inputs';
+import {
+  PasswordInputRhf,
+  TextAreaInputRhf,
+  TextInputRhf,
+} from '@/components/elements/inputs';
 
-import { ControllerProps } from '@/types/forms';
+import { ControllerProps } from '@/types/forms-input-rhf';
 
 export function FormController(props: ControllerProps) {
   const { control } = props;
@@ -12,6 +16,8 @@ export function FormController(props: ControllerProps) {
       return <TextInputRhf {...props} />;
     case 'text-area':
       return <TextAreaInputRhf {...props} />;
+    case 'password-input':
+      return <PasswordInputRhf {...props} />;
     default:
       return null;
   }

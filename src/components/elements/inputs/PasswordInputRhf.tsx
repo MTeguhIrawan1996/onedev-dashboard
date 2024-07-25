@@ -1,6 +1,6 @@
 'use client';
 
-import { Textarea } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 import * as React from 'react';
 import { useController } from 'react-hook-form';
 
@@ -8,13 +8,13 @@ import classes from '@/components/elements/inputs/input.module.css';
 
 import { FieldErrorMessage } from '@/components/elements/typography';
 
-import { ITextAreaInputRhfProps } from '@/types/forms-input-rhf';
+import { IPasswordInputRhfProps } from '@/types/forms-input-rhf';
 
-export function TextAreaInputRhf({ name, ...rest }: ITextAreaInputRhfProps) {
+export function PasswordInputRhf({ name, ...rest }: IPasswordInputRhfProps) {
   const { field, fieldState } = useController({ name });
 
   return (
-    <Textarea
+    <PasswordInput
       {...field}
       classNames={{
         error: classes.error,

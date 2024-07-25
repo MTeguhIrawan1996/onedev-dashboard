@@ -28,7 +28,6 @@ export function AppShellWrapper({
   return (
     <AppShell header={{ height: 'fit-content' }} padding='md'>
       <AppShell.Header withBorder={false}>
-        {/* <Container size='xs'> */}
         <Stack gap={0}>
           <Group
             p='sm'
@@ -61,7 +60,6 @@ export function AppShellWrapper({
             <Breadcrumb />
           </Box>
         </Stack>
-        {/* </Container> */}
       </AppShell.Header>
       <AppShell.Main
         style={{

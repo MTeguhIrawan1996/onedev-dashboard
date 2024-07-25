@@ -1,0 +1,11 @@
+.input {
+  &[data-error] {
+    border: 1px solid var(--mantine-color-red-5);
+    color: var(--mantine-color-red-5);
+    --input-placeholder-color: var(--mantine-color-red-5);
+  }
+}
+
+.error {
+  color: var(--mantine-color-red-5);
+}

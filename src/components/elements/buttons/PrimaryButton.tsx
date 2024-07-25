@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mantine/core';
 import * as React from 'react';
 
-type IPrimaryButtonProps = {
+export type IPrimaryButtonProps = {
   label: string;
 } & ButtonProps &
   React.ComponentPropsWithRef<'button'>;

@@ -1,9 +1,13 @@
 import { Avatar, Group, rem, Text, UnstyledButton } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 
-import classes from './Button.module.css';
+import classes from '@/components/elements/buttons/Button.module.css';
+
+import { useReadAuthUser } from '@/services/supabase/auth/useReadAuthUser';
 
 export function UserButton() {
+  const { data } = useReadAuthUser();
+
   return (
     <UnstyledButton className={classes.user}>
       <Group>
@@ -14,10 +18,10 @@ export function UserButton() {
 
         <div style={{ flex: 1 }}>
           <Text size='sm' fw={500}>
-            M Teguh Irawan
+            -
           </Text>
           <Text c='dimmed' size='xs'>
-            onedev@outlook.com
+            {data?.email || '-'}
           </Text>
         </div>
 
